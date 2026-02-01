@@ -204,13 +204,6 @@ const App: React.FC = () => {
     setTimeout(() => setCopyFeedback(false), 2000);
   };
 
-  const getGenerateLabel = () => {
-    if (loading) return 'PREPARING...';
-    if (outputs.length > 0 && isDirty) return 'UPDATE';
-    if (outputs.length > 0) return 'REFRESH';
-    return 'GENERATE';
-  };
-
   const selectedOutput = outputs.find(o => o.id === selectedOutputId);
 
   return (
@@ -225,38 +218,23 @@ const App: React.FC = () => {
           <h1 className="font-bold text-slate-800 tracking-tight text-sm">Lifestyle Lens</h1>
         </div>
         
-        <div className="flex items-center gap-2 glass p-1.5 rounded-full shadow-lg shadow-purple-900/5">
+        {/* Simplified Header: Just 2 buttons as requested */}
+        <div className="flex items-center glass p-1.5 rounded-full shadow-lg shadow-purple-900/5 min-w-[140px] justify-between">
           <button 
             onClick={handleReset}
-            title="Start New Project"
-            className="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-purple-600 hover:bg-white/50 rounded-full transition-all"
+            title="New Project"
+            className="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-purple-600 hover:bg-white/50 rounded-full transition-all flex-shrink-0"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
           </button>
           
-          <div className="w-[1px] h-4 bg-slate-200 mx-1"></div>
+          <div className="w-[1px] h-4 bg-slate-200 mx-2"></div>
           
           <button 
-            onClick={() => setActiveTab('form')}
-            className={`px-6 py-2 text-xs font-bold rounded-full transition-all ${activeTab === 'form' ? 'bg-white text-slate-900 shadow-md' : 'text-slate-500 hover:text-slate-900'}`}
+            onClick={() => setActiveTab(activeTab === 'form' ? (outputs.length > 0 ? 'results' : 'form') : 'form')}
+            className={`px-6 py-2 text-xs font-bold rounded-full transition-all bg-white text-slate-900 shadow-md hover:bg-slate-50 min-w-[90px] ${outputs.length === 0 && activeTab === 'form' ? 'opacity-50 cursor-default' : ''}`}
           >
-            Studio
-          </button>
-          
-          <button 
-            onClick={() => outputs.length > 0 && setActiveTab('results')}
-            className={`px-6 py-2 text-xs font-bold rounded-full transition-all ${activeTab === 'results' ? 'bg-white text-slate-900 shadow-md' : 'text-slate-500 hover:text-slate-900'} ${outputs.length === 0 ? 'opacity-30 cursor-not-allowed' : ''}`}
-          >
-            Gallery
-          </button>
-          
-          <button 
-            onClick={handleGenerate}
-            disabled={loading}
-            style={{ backgroundColor: formData.primaryColor }}
-            className={`ml-4 px-8 py-2.5 text-white text-xs font-black rounded-full hover:brightness-110 transition-all disabled:opacity-50 shadow-xl ${isDirty ? 'animate-pulse' : ''}`}
-          >
-            {getGenerateLabel()}
+            {activeTab === 'form' ? (outputs.length > 0 ? 'Gallery' : 'Studio') : 'Studio'}
           </button>
         </div>
       </header>
@@ -354,7 +332,7 @@ const App: React.FC = () => {
                  <h2 className="text-4xl font-serif font-bold text-slate-800 italic">Vision Studio</h2>
                  <p className="text-sm text-slate-500 leading-relaxed font-medium">Configure your brand assets and let the engine weave high-end commercial concepts tailored to your aesthetic.</p>
                  <button onClick={handleGenerate} disabled={loading} style={{ backgroundColor: formData.primaryColor }} className="px-12 py-5 text-white rounded-full font-black text-sm shadow-2xl shadow-purple-900/20 hover:scale-105 active:scale-95 transition-all">
-                   {getGenerateLabel()}
+                   {loading ? 'PREPARING...' : outputs.length > 0 ? 'UPDATE' : 'GENERATE'}
                  </button>
               </div>
             </div>
