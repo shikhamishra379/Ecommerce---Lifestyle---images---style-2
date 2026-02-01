@@ -1,0 +1,7 @@
+{
+  "name": "E-Com Visual Engine",
+  "description": "A professional AI prompt generator for e-commerce product photography, designed for marketing teams and designers.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
