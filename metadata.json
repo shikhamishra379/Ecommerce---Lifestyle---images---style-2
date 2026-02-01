@@ -1,7 +1,5 @@
 {
-  "name": "E-Com Visual Engine",
-  "description": "A professional AI prompt generator for e-commerce product photography, designed for marketing teams and designers.",
-  "requestFramePermissions": [
-    "camera"
-  ]
+  "name": "PromptEngine Pro",
+  "description": "A focused AI prompt generator for e-commerce, producing 6 distinct professional photography blueprints.",
+  "requestFramePermissions": []
 }
